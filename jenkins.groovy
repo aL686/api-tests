@@ -7,9 +7,11 @@ node {
         getProject("$base_git_url", "main")
     }
     try {
-        parallel runTestWithTag()
+        stage("Run Tests") {
+            parallel runTestWithTag()
+        }
     } finally {
-        stage("Allure") {
+        stage("Generate Allure Report") {
             generateAllure()
         }
     }
