@@ -3,7 +3,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-@Tag("Тэг")
+@Tag("UI")
 @Epic("Эпик")
 @DisplayName("Описание")
 public class QaAutomationTestPageTests extends BrowserSettings {
