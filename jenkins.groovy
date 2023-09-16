@@ -29,7 +29,7 @@ node {
 
 
 def runTestWithTag() {
-    labelledShell(label: "Run ", script: "chmod +x gradlew \n./gradlew -x clean test")
+    labelledShell(label: "Run main", script: "chmod +x gradlew \n./gradlew -x clean test")
 }
 
 def getProject(String repo, String branch) {
