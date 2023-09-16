@@ -19,7 +19,7 @@ node {
 
         try {
             stage("Run tests") {
-                parallel runTestWithTag()
+                 runTestWithTag()
             }
         } finally {
             stage("Allure") {
