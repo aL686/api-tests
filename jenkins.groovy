@@ -1,7 +1,6 @@
 def branch_cutted = "main"
 base_git_url = "https://gitlab.com/epickonfetka/cicd-threadqa.git"
 
-
 node {
     withEnv(["branch=${branch_cutted}"]) {
         stage("Checkout Branch") {
@@ -16,13 +15,12 @@ node {
                 echo "Current branch is main"
             }
         }
-
         try {
             stage("Run tests") {
                 parallel runTestWithTag()
             }
         } finally {
-            stage("Allure") {
+            stage("Generate report") {
                 generateAllure()
             }
         }
@@ -31,11 +29,7 @@ node {
 
 
 def runTestWithTag() {
-    try {
-        labelledShell(label: "Run ", script: "chmod +x gradlew \n./gradlew -x clean test")
-    } finally {
-        echo "some failed tests"
-    }
+    labelledShell(label: "Run ", script: "chmod +x gradlew \n./gradlew -x clean test")
 }
 
 def getProject(String repo, String branch) {
