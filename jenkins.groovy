@@ -19,7 +19,7 @@ node {
 
         try {
             stage("Run tests") {
-                labelledShell(label: "Run main", script: "chmod +x gradlew \n./gradlew -x test")
+                labelledShell("chmod +x gradlew \n./gradlew -x test")
             }
         } finally {
             stage("Allure") {
