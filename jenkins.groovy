@@ -19,24 +19,22 @@ node {
 
         try {
             stage("Run tests") {
-                 runTestWithTag()
+                labelledShell(label: "Run main", script: "chmod +x gradlew \n./gradlew -x test")
             }
         } finally {
             stage("Allure") {
-                generateAllure()
+                allure([
+                        includeProperties: true,
+                        jdk              : '',
+                        properties       : [],
+                        reportBuildPolicy: 'ALWAYS',
+                        results          : [[path: 'build/allure-results']]
+                ])
             }
         }
     }
 }
 
-
-def runTestWithTag() {
-    try {
-        labelledShell(label: "Run ", script: "chmod +x gradlew \n./gradlew -x clean test")
-    } finally {
-        echo "some failed tests"
-    }
-}
 
 def getProject(String repo, String branch) {
     cleanWs()
@@ -46,14 +44,4 @@ def getProject(String repo, String branch) {
                                         url: repo
                                 ]]
     ]
-}
-
-def generateAllure() {
-    allure([
-            includeProperties: true,
-            jdk              : '',
-            properties       : [],
-            reportBuildPolicy: 'ALWAYS',
-            results          : [[path: 'build/allure-results']]
-    ])
 }
