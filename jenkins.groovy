@@ -19,7 +19,7 @@ node {
 
 def runTestWithTag() {
     try {
-        labelledShell(label: "Run ", script: "chmod +x gradlew \n./gradlew -x test")
+        labelledShell(label: "Run ", script: "./gradlew -x test")
     } finally {
         echo "some failed tests"
     }
