@@ -1,11 +1,9 @@
-task_branch = "${TEST_BRANCH_NAME}"
-def branch_cutted = task_branch.contains("origin") ? task_branch.split('/')[1] : task_branch.trim()
-currentBuild.displayName = "$branch_cutted"
+def branch_cutted = "main"
 base_git_url = "https://gitlab.com/epickonfetka/cicd-threadqa.git"
 
 
 node {
-    withEnv(["branch=${branch_cutted}", "base_url=${base_git_url}"]) {
+    withEnv(["branch=${branch_cutted}"]) {
         stage("Checkout Branch") {
             if (!"$branch_cutted".contains("main")) {
                 try {
@@ -20,9 +18,11 @@ node {
         }
 
         try {
-            parallel getTestStages(["apiTests", "uiTests"])
+            stage("Checkout Branch") {
+                parallel runTestWithTag()
+            }
         } finally {
-            stage ("Allure") {
+            stage("Allure") {
                 generateAllure()
             }
         }
@@ -30,20 +30,9 @@ node {
 }
 
 
-def getTestStages(testTags) {
-    def stages = [:]
-    testTags.each { tag ->
-        stages["${tag}"] = {
-            runTestWithTag(tag)
-        }
-    }
-    return stages
-}
-
-
-def runTestWithTag(String tag) {
+def runTestWithTag() {
     try {
-        labelledShell(label: "Run ${tag}", script: "chmod +x gradlew \n./gradlew -x test ${tag}")
+        labelledShell(label: "Run ", script: "chmod +x gradlew \n./gradlew -x clean test")
     } finally {
         echo "some failed tests"
     }
