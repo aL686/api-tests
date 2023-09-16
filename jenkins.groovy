@@ -18,7 +18,7 @@ node {
         }
 
         try {
-            stage("Checkout Branch") {
+            stage("Run tests") {
                 parallel runTestWithTag()
             }
         } finally {
