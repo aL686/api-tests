@@ -16,21 +16,17 @@ node {
                 echo "Current branch is main"
             }
         }
-
-        try {
-            stage("Run tests") {
-                labelledShell("chmod +x gradlew \n./gradlew -x test")
-            }
-        } finally {
-            stage("Allure") {
-                allure([
-                        includeProperties: true,
-                        jdk              : '',
-                        properties       : [],
-                        reportBuildPolicy: 'ALWAYS',
-                        results          : [[path: 'build/allure-results']]
-                ])
-            }
+        stage("Run tests") {
+            labelledShell("chmod +x gradlew \n./gradlew -x test")
+        }
+        stage("Allure") {
+            allure([
+                    includeProperties: true,
+                    jdk              : '',
+                    properties       : [],
+                    reportBuildPolicy: 'ALWAYS',
+                    results          : [[path: 'build/allure-results']]
+            ])
         }
     }
 }
@@ -44,4 +40,5 @@ def getProject(String repo, String branch) {
                                         url: repo
                                 ]]
     ]
+
 }
