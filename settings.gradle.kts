@@ -1,2 +1,2 @@
-rootProject.name = "ui-tests"
+rootProject.name = "tests"
 
