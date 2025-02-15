@@ -14,7 +14,7 @@ public class BaseCheckers {
         assertThat("HTTP response status code", actualStatusCode, Matchers.is(expectedStatusCode));
     }
 
-    @Step("Проверка, что список {1} не пустой")
+    @Step("Проверка, что список не пустой")
     public void checkNotEmptyList(List<?> list) {
         assertThat("Список пустой", list.isEmpty(), Matchers.is(Matchers.not(true)));
     }
